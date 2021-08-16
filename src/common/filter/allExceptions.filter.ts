@@ -17,19 +17,23 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
     let status: number;
+    let errorName: string = '';
     let message: string = '';
+
     console.log('exception is: ', exception);
     if (exception instanceof MongoError) {
       status = this.mongodbExceptions(exception);
     } else if (exception instanceof HttpException) {
+      const error: any = exception.getResponse().valueOf();
+      message = error?.message;
       status = exception.getStatus();
     } else status = HttpStatus.INTERNAL_SERVER_ERROR;
     if (exception?.message) {
-      message = exception.message;
+      errorName = exception.message;
     }
     return of({
       success: false,
-      message: '',
+      message: errorName,
       data: {
         statusCode: status,
         timestamp: new Date().toISOString(),
