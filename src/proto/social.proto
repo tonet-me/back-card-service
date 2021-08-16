@@ -46,7 +46,6 @@ message GetOwnSocials{
     string userId = 1;
 }
 
-
 message SocialResponse {
   bool success = 1;
   string message = 2;
@@ -62,7 +61,8 @@ message SocialsResponse {
 service SocialService {
   rpc addSocial (AddSocialRequest) returns (SocialResponse);
   rpc updateSocial (UpdateSocialRequest) returns (SocialResponse);
-  rpc deleteSocial (DeleteSocial) returns (SocialResponse);
-  rpc getSocial (GetOwnSocial) returns (SocialResponse);
-  rpc getSocials (GetOwnSocials) returns (SocialsResponse);
+  rpc getOwnSocial (GetOwnSocial) returns (SocialResponse);
+  rpc getOwnSocials (GetOwnSocials) returns (SocialsResponse);
+  rpc deleteOwnSocial (GetOwnSocial) returns (SocialResponse);
+
 }

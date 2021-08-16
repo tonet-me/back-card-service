@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { PaginateModel, Types } from 'mongoose';
+import { getOwnSocialDTO } from './dto/socialId.dto';
 import { ISocial, ISocialSchema } from './interface/social.interface';
 
 @Injectable()
@@ -14,9 +15,11 @@ export class SocialService {
     return this.socialModel.findById(socialId);
   }
   public async find(query: any = {}): Promise<ISocial[]> {
-    console.log('data', query);
-
     return this.socialModel.find(query);
+  }
+
+  public async findOne(query: any = {}): Promise<ISocial> {
+    return this.socialModel.findOne(query);
   }
 
   public async create(socialData: ISocial): Promise<ISocial> {
@@ -36,5 +39,7 @@ export class SocialService {
     );
   }
 
-  public async remove(socialId: Types.ObjectId) {}
+  public async removeOwn(socialId: string, userId: string) {
+    return this.socialModel.findOneAndDelete({ _id: socialId, userId });
+  }
 }

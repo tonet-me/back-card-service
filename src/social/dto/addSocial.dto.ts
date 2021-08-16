@@ -1,6 +1,17 @@
-import { IsDefined, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsDefined,
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class AddSocialDto {
+  @IsDefined()
+  @IsMongoId()
+  @IsNotEmpty()
+  readonly userId: string;
+
   @IsDefined()
   @IsString()
   @IsNotEmpty()
