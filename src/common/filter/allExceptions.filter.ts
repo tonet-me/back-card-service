@@ -4,9 +4,7 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
-  InternalServerErrorException,
 } from '@nestjs/common';
-import { Response } from 'express';
 import { MongoError } from 'mongodb';
 import { of } from 'rxjs';
 
@@ -14,13 +12,10 @@ import { of } from 'rxjs';
 export class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse();
     const request = ctx.getRequest();
     let status: number;
     let errorName: string = '';
     let message: string = '';
-
-    console.log('exception is: ', exception);
     if (exception instanceof MongoError) {
       status = this.mongodbExceptions(exception);
     } else if (exception instanceof HttpException) {
@@ -41,19 +36,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
         message,
       },
     });
-    response.status(status).json({
-      success: false,
-      message: '',
-      data: {
-        status: '',
-        jwt: '',
-
-        // statusCode: status,
-        // // timestamp: new Date().toISOString(),
-        // path: request.url,
-        // message,
-      },
-    });
   }
 
   private mongodbExceptions(exception: MongoError): number {
@@ -62,11 +44,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     exception.message = err.message;
     return 409;
   }
-  // private internalError(exception: InternalServerErrorException): number {
-  //   return exception instanceof HttpException
-  //     ? exception.getStatus()
-  //     : HttpStatus.INTERNAL_SERVER_ERROR;
-  // }
+
   private mongodbErrorHandler(err: MongoError) {
     let path;
     err.message &&
