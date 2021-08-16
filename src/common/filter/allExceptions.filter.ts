@@ -40,7 +40,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
   private mongodbExceptions(exception: MongoError): number {
     const err = this.mongodbErrorHandler(exception);
-    console.log('mongodb error: ', err);
     exception.message = err.message;
     return 409;
   }

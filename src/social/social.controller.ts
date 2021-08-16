@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  NotFoundException,
-} from '@nestjs/common';
+import { Controller, NotFoundException } from '@nestjs/common';
 import { SocialService } from './social.service';
 import { GrpcMethod } from '@nestjs/microservices';
 import { IResponse } from 'src/common/utils/transform.response';
@@ -57,13 +49,10 @@ export class SocialController {
   public async updateProfile(
     body: getOwnSocialDTO,
   ): Promise<IResponse<ISocial>> {
-    console.log('body', body);
-
     const removeSocial: ISocial = await this.socialService.removeOwn(
       body._id,
       body.userId,
     );
-    // console.log(':social', social);
     if (!removeSocial)
       throw new NotFoundException('not found this social item');
     return new Responser(true, 'Done ', removeSocial);

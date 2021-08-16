@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { PaginateModel, Types } from 'mongoose';
-import { getOwnSocialDTO } from './dto/socialId.dto';
+import { PaginateModel } from 'mongoose';
 import { ISocial, ISocialSchema } from './interface/social.interface';
 
 @Injectable()
