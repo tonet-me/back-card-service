@@ -22,9 +22,10 @@ export class SocialController {
   public async updateSocial(
     body: UpdateSocialDto,
   ): Promise<IResponse<ISocial>> {
+    const { _id, ...updateData } = body;
     const updateSocial: ISocial = await this.socialService.update(
-      body._id,
-      body,
+      _id,
+      updateData,
     );
     return new Responser(true, 'Done ', updateSocial);
   }
@@ -46,7 +47,7 @@ export class SocialController {
     return new Responser(true, 'Done ', socials);
   }
   @GrpcMethod('SocialService', 'deleteOwnSocial')
-  public async updateProfile(
+  public async removeOwnSocial(
     body: getOwnSocialDTO,
   ): Promise<IResponse<ISocial>> {
     const removeSocial: ISocial = await this.socialService.removeOwn(
