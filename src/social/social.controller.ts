@@ -46,7 +46,7 @@ export class SocialController {
       userId: body.userId,
     });
     if (!social || social.length <= 0) {
-      return new Responser(false, 'no content', [], HttpStatus.NO_CONTENT);
+      return new Responser(true, 'no content', [], HttpStatus.NO_CONTENT);
     }
     return new Responser(true, 'Done ', social);
   }
@@ -58,7 +58,7 @@ export class SocialController {
       userId: body.userId,
     });
     if (!socials || socials.length <= 0) {
-      return new Responser(false, 'no content', [], HttpStatus.NO_CONTENT);
+      return new Responser(true, 'no content', [], HttpStatus.NO_CONTENT);
     }
     return new Responser(true, 'Done ', socials);
   }
