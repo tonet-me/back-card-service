@@ -1,4 +1,4 @@
-import { Controller, NotFoundException } from '@nestjs/common';
+import { Controller, HttpStatus, NotFoundException } from '@nestjs/common';
 import { SocialService } from './social.service';
 import { GrpcMethod } from '@nestjs/microservices';
 import { IResponse } from 'src/common/utils/transform.response';
@@ -12,13 +12,13 @@ import { getOwnSocialDTO, getOwnSocialsDTO } from './dto/socialId.dto';
 export class SocialController {
   constructor(private readonly socialService: SocialService) {}
 
-  @GrpcMethod('SocialService', 'addSocial')
+  @GrpcMethod('SocialService', 'AddSocial')
   public async addSocial(body: AddSocialDto): Promise<IResponse<ISocial>> {
     const newSocial: ISocial = await this.socialService.create(body);
     return new Responser(true, 'Done ', newSocial);
   }
 
-  @GrpcMethod('SocialService', 'updateSocial')
+  @GrpcMethod('SocialService', 'UpdateSocial')
   public async updateSocial(
     body: UpdateSocialDto,
   ): Promise<IResponse<ISocial>> {
@@ -29,24 +29,40 @@ export class SocialController {
     );
     return new Responser(true, 'Done ', updateSocial);
   }
-  @GrpcMethod('SocialService', 'getOwnSocial')
+  @GrpcMethod('SocialService', 'GetOwnSocial')
   public async getSocial(body: getOwnSocialDTO): Promise<IResponse<ISocial>> {
     const social: ISocial = await this.socialService.findOne({
       userId: body.userId,
       _id: body._id,
     });
+    if (!social) throw new NotFoundException('social not found');
     return new Responser(true, 'Done ', social);
   }
-  @GrpcMethod('SocialService', 'getOwnSocials')
+  @GrpcMethod('SocialService', 'GetSocialPublic')
+  public async getSocialPublic(
+    body: getOwnSocialsDTO,
+  ): Promise<IResponse<ISocial[]>> {
+    const social: ISocial[] = await this.socialService.find({
+      userId: body.userId,
+    });
+    if (!social || social.length <= 0) {
+      return new Responser(false, 'no content', [], HttpStatus.NO_CONTENT);
+    }
+    return new Responser(true, 'Done ', social);
+  }
+  @GrpcMethod('SocialService', 'GetOwnSocials')
   public async getSocials(
     body: getOwnSocialsDTO,
   ): Promise<IResponse<ISocial[]>> {
     const socials: ISocial[] = await this.socialService.find({
       userId: body.userId,
     });
+    if (!socials || socials.length <= 0) {
+      return new Responser(false, 'no content', [], HttpStatus.NO_CONTENT);
+    }
     return new Responser(true, 'Done ', socials);
   }
-  @GrpcMethod('SocialService', 'deleteOwnSocial')
+  @GrpcMethod('SocialService', 'DeleteOwnSocial')
   public async removeOwnSocial(
     body: getOwnSocialDTO,
   ): Promise<IResponse<ISocial>> {
