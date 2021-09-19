@@ -68,8 +68,6 @@ export class CardController {
   public async getCards(
     body: Pick<getOwnCardDTO, 'userId'>,
   ): Promise<IResponse<ICard[]>> {
-    console.log('ok');
-
     const cards: ICard[] = await this.cardService.find({
       userId: body.userId,
     });
