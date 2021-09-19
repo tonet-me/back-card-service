@@ -1,20 +1,20 @@
 import { Controller, HttpStatus, NotFoundException } from '@nestjs/common';
-import { SocialService } from './social.service';
+import { CardService } from './card.service';
 import { GrpcMethod } from '@nestjs/microservices';
 import { IResponse } from 'src/common/utils/transform.response';
-import { ISocial } from './interface/social.interface';
+import { ISocial } from './interface/card.interface';
 import { Responser } from 'src/common/utils/responser';
 import { UpdateSocialDto } from './dto/updateSocial.dto';
 import { AddSocialDto } from './dto/addSocial.dto';
 import { getOwnSocialDTO, getOwnSocialsDTO } from './dto/socialId.dto';
 
-@Controller('social')
-export class SocialController {
-  constructor(private readonly socialService: SocialService) {}
+@Controller('card')
+export class CardController {
+  constructor(private readonly cardService: CardService) {}
 
   @GrpcMethod('SocialService', 'AddSocial')
   public async addSocial(body: AddSocialDto): Promise<IResponse<ISocial>> {
-    const newSocial: ISocial = await this.socialService.create(body);
+    const newSocial: ISocial = await this.cardService.create(body);
     return new Responser(true, 'Done ', newSocial);
   }
 
@@ -23,7 +23,7 @@ export class SocialController {
     body: UpdateSocialDto,
   ): Promise<IResponse<ISocial>> {
     const { _id, ...updateData } = body;
-    const updateSocial: ISocial = await this.socialService.update(
+    const updateSocial: ISocial = await this.cardService.update(
       _id,
       updateData,
     );
@@ -31,7 +31,7 @@ export class SocialController {
   }
   @GrpcMethod('SocialService', 'GetOwnSocial')
   public async getSocial(body: getOwnSocialDTO): Promise<IResponse<ISocial>> {
-    const social: ISocial = await this.socialService.findOne({
+    const social: ISocial = await this.cardService.findOne({
       userId: body.userId,
       _id: body._id,
     });
@@ -42,7 +42,7 @@ export class SocialController {
   public async getSocialPublic(
     body: getOwnSocialsDTO,
   ): Promise<IResponse<ISocial[]>> {
-    const social: ISocial[] = await this.socialService.find({
+    const social: ISocial[] = await this.cardService.find({
       userId: body.userId,
     });
     if (!social || social.length <= 0) {
@@ -54,7 +54,7 @@ export class SocialController {
   public async getSocials(
     body: getOwnSocialsDTO,
   ): Promise<IResponse<ISocial[]>> {
-    const socials: ISocial[] = await this.socialService.find({
+    const socials: ISocial[] = await this.cardService.find({
       userId: body.userId,
     });
     if (!socials || socials.length <= 0) {
@@ -66,7 +66,7 @@ export class SocialController {
   public async removeOwnSocial(
     body: getOwnSocialDTO,
   ): Promise<IResponse<ISocial>> {
-    const removeSocial: ISocial = await this.socialService.removeOwn(
+    const removeSocial: ISocial = await this.cardService.removeOwn(
       body._id,
       body.userId,
     );

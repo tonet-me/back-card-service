@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { PaginateModel } from 'mongoose';
-import { ISocial, ISocialSchema } from './interface/social.interface';
+import { ISocial, ISocialSchema } from './interface/card.interface';
 
 @Injectable()
-export class SocialService {
+export class CardService {
   constructor(
-    @InjectModel('Social')
+    @InjectModel('Card')
     private socialModel: PaginateModel<ISocialSchema>,
   ) {}
 

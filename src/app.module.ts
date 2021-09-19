@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import dbConf from 'config/db.conf';
 import serverConf from 'config/server.conf';
-import { SocialModule } from './social/social.module';
+import { CardModule } from './card/card.module';
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { SocialModule } from './social/social.module';
       }),
       inject: [ConfigService],
     }),
-    SocialModule,
+    CardModule,
   ],
 })
 export class AppModule {}
