@@ -65,13 +65,19 @@ export class CardController {
   //   return new Responser(true, 'Done ', social);
   // }
   @GrpcMethod('CardService', 'GetOwnCards')
-  public async getCards(body: getOwnCardDTO): Promise<IResponse<ICard[]>> {
+  public async getCards(
+    body: Pick<getOwnCardDTO, 'userId'>,
+  ): Promise<IResponse<ICard[]>> {
+    console.log('ok');
+
     const cards: ICard[] = await this.cardService.find({
       userId: body.userId,
     });
+
     if (!cards || cards.length <= 0) {
       return new Responser(true, 'no card', [], HttpStatus.NO_CONTENT);
     }
+
     return new Responser(true, 'Done ', cards);
   }
   @GrpcMethod('CardService', 'DeleteOwnCard')
