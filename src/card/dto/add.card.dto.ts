@@ -66,8 +66,7 @@ class MailDTO {
 
 class LocationDTO {
   @IsDefined()
-  @IsArray()
-  @IsNumber()
+  @IsNumber({}, { each: true })
   @ArrayMaxSize(2)
   @ArrayMinSize(2)
   readonly coordinates: number[];
@@ -81,7 +80,7 @@ class LocationDTO {
 class AddressDTO {
   @IsDefined()
   @IsNotEmpty()
-  @IsMongoId()
+  @IsString()
   readonly title: string;
 
   @IsDefined()
@@ -149,7 +148,7 @@ export class AddCardDto {
   @IsDefined()
   @IsNotEmpty()
   @IsString()
-  @MinLength(6)
+  @MinLength(5)
   readonly userName: string;
 
   @IsOptional()
