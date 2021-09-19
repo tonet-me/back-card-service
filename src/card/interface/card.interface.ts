@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { SocialTitleEnum } from '../dto/add.card.dto';
+import { SocialTitleEnum } from '../enum/socail.title.dto';
 
 interface Phone {
   readonly title: string;

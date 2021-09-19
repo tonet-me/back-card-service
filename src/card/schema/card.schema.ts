@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';
-import { SocialTitleEnum } from '../dto/add.card.dto';
+import { SocialTitleEnum } from '../enum/socail.title.dto';
 import { ICard } from '../interface/card.interface';
 
 export const CardSchema = new mongoose.Schema<ICard>(
