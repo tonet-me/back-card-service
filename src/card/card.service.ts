@@ -1,36 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { PaginateModel } from 'mongoose';
-import { ISocial, ISocialSchema } from './interface/card.interface';
+import { ICard } from './interface/card.interface';
 
 @Injectable()
 export class CardService {
   constructor(
     @InjectModel('Card')
-    private socialModel: PaginateModel<ISocialSchema>,
+    private cardModel: PaginateModel<ICard>,
   ) {}
 
-  public async findbyId(socialId: string): Promise<ISocial> {
-    return this.socialModel.findById(socialId);
+  public async findbyId(cardId: string): Promise<ICard> {
+    return this.cardModel.findById(cardId);
   }
-  public async find(query: any = {}): Promise<ISocial[]> {
-    return this.socialModel.find(query);
-  }
-
-  public async findOne(query: any = {}): Promise<ISocial> {
-    return this.socialModel.findOne(query);
+  public async find(query: any = {}): Promise<ICard[]> {
+    return this.cardModel.find(query);
   }
 
-  public async create(socialData: ISocial): Promise<ISocial> {
-    const newSocial = new this.socialModel(socialData);
-    return newSocial.save();
+  public async findOne(query: any = {}): Promise<ICard> {
+    return this.cardModel.findOne(query);
   }
 
-  public async update(socialId: string, socialData: ISocial): Promise<ISocial> {
-    return this.socialModel.findByIdAndUpdate(
-      socialId,
+  public async create(cardData: Partial<ICard>): Promise<ICard> {
+    const newCard = new this.cardModel(cardData);
+    return newCard.save();
+  }
+
+  public async update(
+    cardId: string,
+    userId: string,
+    cardData: Partial<ICard>,
+  ): Promise<ICard> {
+    return this.cardModel.findOneAndUpdate(
+      { _id: cardId, userId },
       {
-        $set: socialData,
+        $set: cardData,
       },
       {
         new: true,
@@ -38,7 +42,7 @@ export class CardService {
     );
   }
 
-  public async removeOwn(socialId: string, userId: string) {
-    return this.socialModel.findOneAndDelete({ _id: socialId, userId });
+  public async removeOwn(cardId: string, userId: string) {
+    return this.cardModel.findOneAndDelete({ _id: cardId, userId });
   }
 }

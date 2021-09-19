@@ -1,13 +1,13 @@
 import { OmitType } from '@nestjs/mapped-types';
 import { IsMongoId, IsNotEmpty } from 'class-validator';
 
-export class SocialIdDTO {
+export class CardIdDTO {
   @IsMongoId()
   @IsNotEmpty()
-  readonly socialId: string;
+  readonly cardId: string;
 }
 
-export class getOwnSocialDTO {
+export class getOwnCardDTO {
   @IsMongoId()
   @IsNotEmpty()
   readonly _id: string;
@@ -17,6 +17,4 @@ export class getOwnSocialDTO {
   readonly userId: string;
 }
 
-export class getOwnSocialsDTO extends OmitType(getOwnSocialDTO, [
-  '_id',
-] as const) {}
+export class getOwnCardsDTO extends OmitType(getOwnCardDTO, ['_id'] as const) {}

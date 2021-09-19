@@ -1,12 +1,15 @@
 import * as mongoose from 'mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';
-import { SocialTitleEnum } from '../dto/addSocial.dto';
-import { ISocialSchema } from '../interface/card.interface';
+import { SocialTitleEnum } from '../dto/add.card.dto';
+import { ICard } from '../interface/card.interface';
 
-export const CardSchema = new mongoose.Schema<ISocialSchema>(
+export const CardSchema = new mongoose.Schema<ICard>(
   {
     userId: { type: mongoose.Types.ObjectId, required: true },
-    name: String,
+    name: {
+      type: String,
+      required: true,
+    },
     title: String,
     about: String,
     photo: String,
@@ -25,29 +28,28 @@ export const CardSchema = new mongoose.Schema<ISocialSchema>(
         content: {
           type: String,
         },
+        order: Number,
       },
     ],
     socials: [
       {
         title: { type: String, enum: SocialTitleEnum },
         content: { type: String },
+        order: Number,
       },
     ],
-    mails: [
-      {
-        type: String,
-      },
-    ],
+    mails: [{ content: String, order: Number }],
     addresses: [
       {
+        title: { type: String, required: true },
         country: String,
-        province: String,
         city: String,
         address: String,
         location: {
           coordinates: [Number],
           type: { type: String },
         },
+        order: Number,
       },
     ],
     isActive: {

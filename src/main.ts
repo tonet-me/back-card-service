@@ -16,9 +16,9 @@ async function bootstrap() {
       transport: Transport.GRPC,
       options: {
         url: URL,
-        package: ['user.social'],
+        package: ['user.card'],
         // protoLoader
-        protoPath: [path.join(__dirname, '../proto/social.proto')],
+        protoPath: [path.join(__dirname, '../proto/card.proto')],
       },
     },
   );

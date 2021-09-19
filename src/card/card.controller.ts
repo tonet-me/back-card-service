@@ -2,76 +2,85 @@ import { Controller, HttpStatus, NotFoundException } from '@nestjs/common';
 import { CardService } from './card.service';
 import { GrpcMethod } from '@nestjs/microservices';
 import { IResponse } from 'src/common/utils/transform.response';
-import { ISocial } from './interface/card.interface';
+import { ICard } from './interface/card.interface';
 import { Responser } from 'src/common/utils/responser';
-import { UpdateSocialDto } from './dto/updateSocial.dto';
-import { AddSocialDto } from './dto/addSocial.dto';
-import { getOwnSocialDTO, getOwnSocialsDTO } from './dto/socialId.dto';
+import { UpdateCardDto } from './dto/update.cardl.dto';
+import { AddCardDto } from './dto/add.card.dto';
+import { getOwnCardDTO } from './dto/card.Id.dto';
+import { UpdateBasicInfoCardDto } from './dto/update.base.card.dto';
 
 @Controller('card')
 export class CardController {
   constructor(private readonly cardService: CardService) {}
 
-  @GrpcMethod('SocialService', 'AddSocial')
-  public async addSocial(body: AddSocialDto): Promise<IResponse<ISocial>> {
-    const newSocial: ISocial = await this.cardService.create(body);
-    return new Responser(true, 'Done ', newSocial);
+  @GrpcMethod('CardService', 'AddCard')
+  public async addCard(body: AddCardDto): Promise<IResponse<ICard>> {
+    const newcard: ICard = await this.cardService.create(body);
+    return new Responser(true, 'Done ', newcard);
   }
 
-  @GrpcMethod('SocialService', 'UpdateSocial')
-  public async updateSocial(
-    body: UpdateSocialDto,
-  ): Promise<IResponse<ISocial>> {
-    const { _id, ...updateData } = body;
-    const updateSocial: ISocial = await this.cardService.update(
+  @GrpcMethod('CardService', 'UpdateCard')
+  public async updateCard(body: UpdateCardDto): Promise<IResponse<ICard>> {
+    const { _id, userId, ...updateData } = body;
+    const updateCard: ICard = await this.cardService.update(
       _id,
+      userId,
       updateData,
     );
-    return new Responser(true, 'Done ', updateSocial);
+    return new Responser(true, 'Done ', updateCard);
   }
-  @GrpcMethod('SocialService', 'GetOwnSocial')
-  public async getSocial(body: getOwnSocialDTO): Promise<IResponse<ISocial>> {
-    const social: ISocial = await this.cardService.findOne({
+
+  @GrpcMethod('CardService', 'UpdateBasicInfoCard')
+  public async updateBasicInfoCard(
+    body: UpdateBasicInfoCardDto,
+  ): Promise<IResponse<ICard>> {
+    const { _id, userId, ...updateData } = body;
+    const updateCard: ICard = await this.cardService.update(
+      _id,
+      userId,
+      updateData,
+    );
+    return new Responser(true, 'Done ', updateCard);
+  }
+
+  @GrpcMethod('CardService', 'GetOwnCard')
+  public async getCard(body: getOwnCardDTO): Promise<IResponse<ICard>> {
+    const card: ICard = await this.cardService.findOne({
       userId: body.userId,
       _id: body._id,
     });
-    if (!social) throw new NotFoundException('social not found');
-    return new Responser(true, 'Done ', social);
+    if (!card) throw new NotFoundException('card not found');
+    return new Responser(true, 'Done ', card);
   }
-  @GrpcMethod('SocialService', 'GetSocialPublic')
-  public async getSocialPublic(
-    body: getOwnSocialsDTO,
-  ): Promise<IResponse<ISocial[]>> {
-    const social: ISocial[] = await this.cardService.find({
+  // @GrpcMethod('CardService', 'GetCardPublic')
+  // public async getCardPublic(
+  //   body: getOwnCardsDTO,
+  // ): Promise<IResponse<ICard[]>> {
+  //   const social: ICard[] = await this.cardService.find({
+  //     userId: body.userId,
+  //   });
+  //   if (!social || social.length <= 0) {
+  //     return new Responser(true, 'no content', [], HttpStatus.NO_CONTENT);
+  //   }
+  //   return new Responser(true, 'Done ', social);
+  // }
+  @GrpcMethod('CardService', 'GetOwnCards')
+  public async getCards(body: getOwnCardDTO): Promise<IResponse<ICard[]>> {
+    const cards: ICard[] = await this.cardService.find({
       userId: body.userId,
     });
-    if (!social || social.length <= 0) {
-      return new Responser(true, 'no content', [], HttpStatus.NO_CONTENT);
+    if (!cards || cards.length <= 0) {
+      return new Responser(true, 'no card', [], HttpStatus.NO_CONTENT);
     }
-    return new Responser(true, 'Done ', social);
+    return new Responser(true, 'Done ', cards);
   }
-  @GrpcMethod('SocialService', 'GetOwnSocials')
-  public async getSocials(
-    body: getOwnSocialsDTO,
-  ): Promise<IResponse<ISocial[]>> {
-    const socials: ISocial[] = await this.cardService.find({
-      userId: body.userId,
-    });
-    if (!socials || socials.length <= 0) {
-      return new Responser(true, 'no content', [], HttpStatus.NO_CONTENT);
-    }
-    return new Responser(true, 'Done ', socials);
-  }
-  @GrpcMethod('SocialService', 'DeleteOwnSocial')
-  public async removeOwnSocial(
-    body: getOwnSocialDTO,
-  ): Promise<IResponse<ISocial>> {
-    const removeSocial: ISocial = await this.cardService.removeOwn(
+  @GrpcMethod('CardService', 'DeleteOwnCard')
+  public async removeOwnCard(body: getOwnCardDTO): Promise<IResponse<ICard>> {
+    const removeCard: ICard = await this.cardService.removeOwn(
       body._id,
       body.userId,
     );
-    if (!removeSocial)
-      throw new NotFoundException('not found this social item');
-    return new Responser(true, 'Done ', removeSocial);
+    if (!removeCard) throw new NotFoundException('not found this card item');
+    return new Responser(true, 'Done ', removeCard);
   }
 }
