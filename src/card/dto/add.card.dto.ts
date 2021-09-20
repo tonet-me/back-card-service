@@ -3,7 +3,6 @@ import {
   ArrayMaxSize,
   ArrayMinSize,
   IsArray,
-  isArray,
   IsDefined,
   IsEnum,
   IsMongoId,
@@ -12,10 +11,9 @@ import {
   IsOptional,
   IsString,
   IsUrl,
-  MinLength,
+  Matches,
   ValidateNested,
 } from 'class-validator';
-import { Types } from 'mongoose';
 import { SocialTitleEnum } from '../enum/socail.title.dto';
 
 class PhoneDTO {
@@ -148,7 +146,9 @@ export class AddCardDto {
   @IsDefined()
   @IsNotEmpty()
   @IsString()
-  @MinLength(5)
+  @Matches(/^(?=[a-zA-Z0-9_]{5,30}$)(?!.*[.]{2})[^.].*[^.]$/, {
+    message: 'username must be _ Alphabets Numbers',
+  })
   readonly userName: string;
 
   @IsOptional()
