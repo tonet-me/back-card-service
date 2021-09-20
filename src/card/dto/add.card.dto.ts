@@ -4,6 +4,7 @@ import {
   ArrayMinSize,
   IsArray,
   IsDefined,
+  IsEmail,
   IsEnum,
   IsMongoId,
   IsNotEmpty,
@@ -53,7 +54,7 @@ class SocialDTO {
 class MailDTO {
   @IsDefined()
   @IsNotEmpty()
-  @IsString()
+  @IsEmail()
   readonly content: string;
 
   @IsDefined()
