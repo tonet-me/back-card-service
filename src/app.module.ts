@@ -5,6 +5,7 @@ import dbConf from 'config/db.conf';
 import serverConf from 'config/server.conf';
 import { CardModule } from './card/card.module';
 import { CountriesModule } from './countries/countries.module';
+import { SeederModule } from './seeder/seeder.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { CountriesModule } from './countries/countries.module';
     }),
     CardModule,
     CountriesModule,
+    SeederModule,
   ],
 })
 export class AppModule {}
