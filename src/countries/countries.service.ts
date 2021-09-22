@@ -28,6 +28,7 @@ export class CountriesService {
   public async insertCountry(data: Partial<ICountry>): Promise<ICountry> {
     return this.countryModel.findOneAndUpdate({ name: data.name }, data, {
       upsert: true,
+      new: true,
     });
   }
   public async insertCities(data: Partial<ICity>): Promise<ICountry> {

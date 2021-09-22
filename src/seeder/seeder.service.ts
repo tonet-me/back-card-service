@@ -22,13 +22,15 @@ export class SeederService {
         name: country,
       });
 
-      if (countryResult)
-        for (const city of countries[country]) {
-          this.countryService.insertCities({
-            countryId: countryResult._id,
-            name: city,
-          });
-        }
+      Logger.log(country, 'country');
+      for (const city of countries[country]) {
+        this.countryService.insertCities({
+          countryId: countryResult._id,
+          name: city,
+        });
+        Logger.log(city, 'city');
+      }
     }
+    Logger.log('Done');
   }
 }
