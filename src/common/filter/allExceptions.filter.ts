@@ -16,7 +16,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
     let status: number;
     let errorName: string = '';
     let message: string = '';
-    console.log(exception);
 
     if (exception instanceof MongoError) {
       status = this.mongodbExceptions(exception);

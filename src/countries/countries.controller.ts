@@ -23,8 +23,6 @@ export class CountriesController {
   public async getCountries(
     body: CountryQueryResolversDTO,
   ): Promise<IResponse<PaginateResult<ICountry>>> {
-    console.log('query');
-
     const countries = await this.countryService.find(body);
     const httpStatus = countries.docs.length
       ? HttpStatus.OK

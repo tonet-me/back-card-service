@@ -1,14 +1,30 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import dbConf from 'config/db.conf';
+import serverConf from 'config/server.conf';
 import { CountriesModule } from 'src/countries/countries.module';
-import { Seeder } from './seeder';
+import { SeederService } from './seeder.service';
 
 @Module({
-  imports: [CountriesModule],
-  providers: [Seeder],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: ['.env.dev', '.env.prod'],
+      load: [dbConf, serverConf],
+      isGlobal: true,
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('database.uri'),
+        useNewUrlParser: true,
+        replicaSet: false,
+      }),
+      inject: [ConfigService],
+    }),
+    CountriesModule,
+  ],
+  providers: [SeederService],
+  exports: [SeederService],
 })
-export class SeederModule implements OnModuleInit {
-  constructor(private readonly seederService: Seeder) {}
-  onModuleInit() {
-    this.seederService.seed();
-  }
-}
+export class SeederModule {}

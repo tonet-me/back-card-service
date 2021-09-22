@@ -5,7 +5,6 @@ import * as path from 'path';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './common/filter/allExceptions.filter';
 import { TransformInterceptor } from './common/utils/transform.response';
-import { Seeder } from './seeder/seeder';
 
 async function bootstrap() {
   const HOST = process.env.BASE_URL;

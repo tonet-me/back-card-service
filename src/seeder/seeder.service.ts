@@ -5,9 +5,9 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { ICountry } from 'src/countries/interface/country.interface';
 @Injectable()
-export class Seeder {
+export class SeederService {
   constructor(private readonly countryService: CountriesService) {}
-  async seed() {
+  public async seed() {
     this.countries();
   }
 
@@ -21,12 +21,9 @@ export class Seeder {
       const countryResult: ICountry = await this.countryService.insertCountry({
         name: country,
       });
-      //   console.log(countries[country]);
 
       if (countryResult)
         for (const city of countries[country]) {
-          console.log(city);
-
           this.countryService.insertCities({
             countryId: countryResult._id,
             name: city,
