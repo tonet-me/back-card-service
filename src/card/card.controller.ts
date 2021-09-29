@@ -52,6 +52,18 @@ export class CardController {
     if (!card) throw new NotFoundException('card not found');
     return new Responser(true, 'Done ', card);
   }
+
+  @GrpcMethod('CardService', 'GetPublicCard')
+  public async getPublicCard(
+    body: Pick<AddCardDto, 'userName'>,
+  ): Promise<IResponse<ICard>> {
+    const card: ICard = await this.cardService.findOne({
+      userName: body.userName,
+    });
+    if (!card) throw new NotFoundException('card not found');
+    return new Responser(true, 'Done ', card);
+  }
+
   // @GrpcMethod('CardService', 'GetCardPublic')
   // public async getCardPublic(
   //   body: getOwnCardsDTO,
