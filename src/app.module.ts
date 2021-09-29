@@ -6,6 +6,7 @@ import serverConf from 'config/server.conf';
 import { CardModule } from './card/card.module';
 import { CountriesModule } from './countries/countries.module';
 import { SeederModule } from './seeder/seeder.module';
+import { ViewCardModule } from './view-card/view-card.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { SeederModule } from './seeder/seeder.module';
     CardModule,
     CountriesModule,
     SeederModule,
+    ViewCardModule,
   ],
 })
 export class AppModule {}
