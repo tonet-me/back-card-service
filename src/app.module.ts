@@ -21,6 +21,7 @@ import { ViewCardModule } from './view-card/view-card.module';
         uri: configService.get<string>('database.uri'),
         useNewUrlParser: true,
         replicaSet: false,
+        useCreateIndex: true,
       }),
       inject: [ConfigService],
     }),
