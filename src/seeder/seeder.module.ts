@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import dbConf from 'config/db.conf';
 import serverConf from 'config/server.conf';
-import { StateModule } from 'src/countries/state.module';
+import { StateModule } from 'src/state/state.module';
 import { SeederService } from './seeder.service';
 
 @Module({

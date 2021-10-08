@@ -14,15 +14,30 @@ export class StateService {
     private cityModel: PaginateModel<ICity>,
   ) {}
 
-  public async findbyId(countryId: string): Promise<ICountry> {
+  public async findCountryById(countryId: string): Promise<ICountry> {
     return this.countryModel.findById(countryId);
   }
-  public async find(query: IPaginateOption): Promise<PaginateResult<ICountry>> {
+  public async findCountires(
+    query: IPaginateOption,
+  ): Promise<PaginateResult<ICountry>> {
     return this.countryModel.paginate(query.filters, query.paginationOptions);
   }
 
-  public async findOne(query: any = {}): Promise<ICountry> {
+  public async findOneCountry(query: any = {}): Promise<ICountry> {
     return this.countryModel.findOne(query);
+  }
+
+  public async findCityById(cityId: string): Promise<ICity> {
+    return this.cityModel.findById(cityId);
+  }
+  public async findCities(
+    query: IPaginateOption,
+  ): Promise<PaginateResult<ICity>> {
+    return this.cityModel.paginate(query.filters, query.paginationOptions);
+  }
+
+  public async findOneCity(query: any = {}): Promise<ICity> {
+    return this.cityModel.findOne(query);
   }
 
   public async insertCountry(data: Partial<ICountry>): Promise<ICountry> {

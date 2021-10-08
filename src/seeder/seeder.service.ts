@@ -1,9 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { StateService } from 'src/countries/state.service';
+import { StateService } from 'src/state/state.service';
 // import countryData from './countries.data.json';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { ICountry } from 'src/countries/interface/country.interface';
+import { ICountry } from 'src/state/interface/country.interface';
 @Injectable()
 export class SeederService {
   constructor(private readonly stateService: StateService) {}
