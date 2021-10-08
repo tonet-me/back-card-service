@@ -6,7 +6,7 @@ import { ICity } from './interface/city.interface.ts';
 import { ICountry } from './interface/country.interface';
 
 @Injectable()
-export class CountriesService {
+export class StateService {
   constructor(
     @InjectModel('Country')
     private countryModel: PaginateModel<ICountry>,

@@ -16,11 +16,11 @@ async function bootstrap() {
       transport: Transport.GRPC,
       options: {
         url: URL,
-        package: ['user.card', 'tonet.country', 'view.card'],
+        package: ['user.card', 'tonet.state', 'view.card'],
         // protoLoader
         protoPath: [
           path.join(__dirname, '../proto/card.proto'),
-          path.join(__dirname, '../proto/country.proto'),
+          path.join(__dirname, '../proto/state.proto'),
           path.join(__dirname, '../proto/view-card.proto'),
         ],
       },

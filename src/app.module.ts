@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import dbConf from 'config/db.conf';
 import serverConf from 'config/server.conf';
 import { CardModule } from './card/card.module';
-import { CountriesModule } from './countries/countries.module';
+import { StateModule } from './countries/state.module';
 import { SeederModule } from './seeder/seeder.module';
 import { ViewCardModule } from './view-card/view-card.module';
 
@@ -26,7 +26,7 @@ import { ViewCardModule } from './view-card/view-card.module';
       inject: [ConfigService],
     }),
     CardModule,
-    CountriesModule,
+    StateModule,
     SeederModule,
     ViewCardModule,
   ],

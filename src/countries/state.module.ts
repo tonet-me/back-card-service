@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { CountriesService } from './countries.service';
-import { CountriesController } from './countries.controller';
+import { StateService } from './state.service';
+import { StateController } from './state.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CountrySchema } from './schema/country.schema';
 import { CitySchema } from './schema/city.schema';
@@ -24,8 +24,8 @@ import { CitySchema } from './schema/city.schema';
       },
     ]),
   ],
-  providers: [CountriesService],
-  controllers: [CountriesController],
-  exports: [CountriesService],
+  providers: [StateService],
+  controllers: [StateController],
+  exports: [StateService],
 })
-export class CountriesModule {}
+export class StateModule {}
