@@ -1,6 +1,7 @@
 import { Transform, Type } from 'class-transformer';
 import {
   IsDefined,
+  IsMongoId,
   IsOptional,
   IsString,
   ValidateNested,
@@ -13,6 +14,10 @@ class FilterDto {
   @IsString()
   @IsOptional()
   readonly name: string;
+
+  @IsMongoId()
+  @IsOptional()
+  readonly countryId: string;
 }
 
 export class CityQueryResolversDTO {
