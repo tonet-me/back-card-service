@@ -53,12 +53,23 @@ export class CardController {
     return new Responser(true, 'Done ', card);
   }
 
-  @GrpcMethod('CardService', 'GetPublicCard')
-  public async getPublicCard(
+  @GrpcMethod('CardService', 'GetPublicCardByUsername')
+  public async getPublicCardByUsername(
     body: Pick<AddCardDto, 'userName'>,
   ): Promise<IResponse<ICard>> {
     const card: ICard = await this.cardService.findOne({
       userName: body.userName,
+    });
+    if (!card) throw new NotFoundException('card not found');
+    return new Responser(true, 'Done ', card);
+  }
+
+  @GrpcMethod('CardService', 'GetPublicCardByQrcode')
+  public async getPublicCardByQrcode(
+    body: Pick<AddCardDto, 'qrcode'>,
+  ): Promise<IResponse<ICard>> {
+    const card: ICard = await this.cardService.findOne({
+      qrcode: body.qrcode,
     });
     if (!card) throw new NotFoundException('card not found');
     return new Responser(true, 'Done ', card);
