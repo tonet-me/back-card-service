@@ -2,9 +2,7 @@ import { OmitType, PartialType } from '@nestjs/mapped-types';
 import { IsDefined, IsMongoId } from 'class-validator';
 import { AddCardDto } from './add.card.dto';
 
-export class UpdateCardDto extends PartialType(
-  OmitType(AddCardDto, ['name', 'userName'] as const),
-) {
+export class UpdateCardDto extends PartialType(AddCardDto) {
   @IsDefined()
   @IsMongoId()
   readonly _id: string;
