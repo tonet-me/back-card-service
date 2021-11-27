@@ -19,7 +19,7 @@ export class StateController {
   public async getCountry(body: CountryIdDTO): Promise<IResponse<ICountry>> {
     const country = await this.stateService.findCountryById(body._id);
     if (!country) throw new NotFoundException('country not found');
-    return new Responser(true, {}, country);
+    return new Responser(true, '', country);
   }
 
   @GrpcMethod('StateService', 'GetCountries')
@@ -37,7 +37,7 @@ export class StateController {
   public async getCity(body: CityIdDTO): Promise<IResponse<ICity>> {
     const city = await this.stateService.findCityById(body._id);
     if (!city) throw new NotFoundException('city not found');
-    return new Responser(true, {}, city);
+    return new Responser(true, '', city);
   }
 
   @GrpcMethod('StateService', 'GetCities')
