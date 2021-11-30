@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { PaginateModel } from 'mongoose';
+import { PaginateModel, PaginateResult } from 'mongoose';
+import { IPaginateOption } from 'src/common/interface.ts/paginationOption.interface';
 import { ICard } from './interface/card.interface';
 
 @Injectable()
@@ -13,8 +14,11 @@ export class CardService {
   public async findbyId(cardId: string): Promise<ICard> {
     return this.cardModel.findById(cardId);
   }
-  public async find(query: any = {}): Promise<ICard[]> {
-    return this.cardModel.find(query);
+
+  public async findByPaginate(
+    query: IPaginateOption,
+  ): Promise<PaginateResult<ICard>> {
+    return this.cardModel.paginate(query.filters, query.paginationOptions);
   }
 
   public async findOne(query: any = {}): Promise<ICard> {

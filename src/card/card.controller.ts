@@ -8,6 +8,8 @@ import { UpdateCardDto } from './dto/update.cardl.dto';
 import { AddCardDto } from './dto/add.card.dto';
 import { getOwnCardDTO } from './dto/card.Id.dto';
 import { UpdateBasicInfoCardDto } from './dto/update.base.card.dto';
+import { CardQueryResolversDTO } from './dto/card.pagination';
+import { PaginateResult } from 'mongoose';
 
 @Controller('card')
 export class CardController {
@@ -89,17 +91,17 @@ export class CardController {
   // }
   @GrpcMethod('CardService', 'GetOwnCards')
   public async getCards(
-    body: Pick<getOwnCardDTO, 'userId'>,
-  ): Promise<IResponse<ICard[]>> {
-    const cards: ICard[] = await this.cardService.find({
-      userId: body.userId,
+    body: Pick<getOwnCardDTO, 'userId'> & CardQueryResolversDTO,
+  ): Promise<IResponse<PaginateResult<ICard>>> {
+    const { filters, userId, ...paginationOptions } = body;
+    const cards = await this.cardService.findByPaginate({
+      filters: { ...filters, userId },
+      ...paginationOptions,
     });
-
-    if (!cards || cards.length <= 0) {
-      return new Responser(true, 'no card', [], HttpStatus.NO_CONTENT);
-    }
-
-    return new Responser(true, 'Done ', cards);
+    const httpStatus = cards.docs.length
+      ? HttpStatus.OK
+      : HttpStatus.NO_CONTENT;
+    return new Responser(true, 'Done ', cards, httpStatus);
   }
   @GrpcMethod('CardService', 'DeleteOwnCard')
   public async removeOwnCard(body: getOwnCardDTO): Promise<IResponse<ICard>> {
