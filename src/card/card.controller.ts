@@ -68,10 +68,11 @@ export class CardController {
 
   @GrpcMethod('CardService', 'GetPublicCardByQrcode')
   public async getPublicCardByQrcode(
-    body: Pick<AddCardDto, 'qrcode'>,
+    body: Pick<getOwnCardDTO, '_id'>,
   ): Promise<IResponse<ICard>> {
     const card: ICard = await this.cardService.findOne({
-      qrcode: body.qrcode,
+      _id: body._id,
+      isActive: true,
     });
     if (!card) throw new NotFoundException('card not found');
     return new Responser(true, 'Done ', card);
