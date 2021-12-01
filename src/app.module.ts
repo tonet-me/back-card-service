@@ -22,6 +22,8 @@ import { ViewCardModule } from './view-card/view-card.module';
         useNewUrlParser: true,
         replicaSet: false,
         useCreateIndex: true,
+        user: configService.get('dbUser'),
+        pass: configService.get('dbPass'),
       }),
       inject: [ConfigService],
     }),
