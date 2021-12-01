@@ -61,6 +61,7 @@ export class CardController {
   ): Promise<IResponse<ICard>> {
     const card: ICard = await this.cardService.findOne({
       userName: body.userName,
+      isActive: true,
     });
     if (!card) throw new NotFoundException('card not found');
     return new Responser(true, 'Done ', card);
