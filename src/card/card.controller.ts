@@ -7,7 +7,7 @@ import { Responser } from 'src/common/utils/responser';
 import { UpdateCardDto } from './dto/update.cardl.dto';
 import { AddCardDto } from './dto/add.card.dto';
 import { getOwnCardDTO } from './dto/card.Id.dto';
-import { UpdateBasicInfoCardDto } from './dto/update.base.card.dto';
+// import { UpdateBasicInfoCardDto } from './dto/update.base.card.dto';
 import { CardQueryResolversDTO } from './dto/card.pagination';
 import { PaginateResult } from 'mongoose';
 
@@ -32,18 +32,18 @@ export class CardController {
     return new Responser(true, 'Done ', updateCard);
   }
 
-  @GrpcMethod('CardService', 'UpdateBasicInfoCard')
-  public async updateBasicInfoCard(
-    body: UpdateBasicInfoCardDto,
-  ): Promise<IResponse<ICard>> {
-    const { _id, userId, ...updateData } = body;
-    const updateCard: ICard = await this.cardService.update(
-      _id,
-      userId,
-      updateData,
-    );
-    return new Responser(true, 'Done ', updateCard);
-  }
+  // @GrpcMethod('CardService', 'UpdateBasicInfoCard')
+  // public async updateBasicInfoCard(
+  //   body: UpdateBasicInfoCardDto,
+  // ): Promise<IResponse<ICard>> {
+  //   const { _id, userId, ...updateData } = body;
+  //   const updateCard: ICard = await this.cardService.update(
+  //     _id,
+  //     userId,
+  //     updateData,
+  //   );
+  //   return new Responser(true, 'Done ', updateCard);
+  // }
 
   @GrpcMethod('CardService', 'GetOwnCard')
   public async getCard(body: getOwnCardDTO): Promise<IResponse<ICard>> {
