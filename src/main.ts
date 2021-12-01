@@ -10,6 +10,7 @@ async function bootstrap() {
   const HOST = process.env.BASE_URL;
   const PORT = process.env.PORT;
   const URL = `${HOST}:${PORT}`;
+
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
     {
