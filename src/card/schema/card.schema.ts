@@ -42,8 +42,8 @@ export const CardSchema = new mongoose.Schema<ICard>(
     addresses: [
       {
         title: { type: String, required: true },
-        country: String,
-        city: String,
+        countryId: { type: mongoose.Types.ObjectId, ref: 'Country' },
+        cityId: { type: mongoose.Types.ObjectId, ref: 'City' },
         address: String,
         location: {
           coordinates: [Number],
@@ -65,3 +65,20 @@ export const CardSchema = new mongoose.Schema<ICard>(
 );
 CardSchema.index({ location: '2dsphere' });
 CardSchema.plugin(mongoosePaginate);
+
+CardSchema.virtual('addresses.country', {
+  ref: 'Country', //Organization is in relation with User
+  localField: 'addresses.countryId', //field that Organization holds as proof of relation
+  foreignField: '_id', //field that User holds as proof of relation
+  justOne: true,
+});
+
+CardSchema.virtual('addresses.city', {
+  ref: 'City', //Organization is in relation with User
+  localField: 'addresses.cityId', //field that Organization holds as proof of relation
+  foreignField: '_id', //field that User holds as proof of relation
+  justOne: true,
+});
+
+CardSchema.set('toObject', { virtuals: true });
+CardSchema.set('toJSON', { virtuals: true });
