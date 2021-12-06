@@ -1,4 +1,4 @@
-import { OmitType, PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/mapped-types';
 import { IsDefined, IsMongoId } from 'class-validator';
 import { AddCardDto } from './add.card.dto';
 
