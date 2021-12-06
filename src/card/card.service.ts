@@ -22,7 +22,10 @@ export class CardService {
   }
 
   public async findOne(query: any = {}): Promise<ICard> {
-    return this.cardModel.findOne(query);
+    return this.cardModel
+      .findOne(query)
+      .populate('addresses.country')
+      .populate('addresses.city');
   }
 
   public async create(cardData: Partial<ICard>): Promise<ICard> {

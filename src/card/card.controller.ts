@@ -7,7 +7,6 @@ import { Responser } from 'src/common/utils/responser';
 import { UpdateCardDto } from './dto/update.cardl.dto';
 import { AddCardDto } from './dto/add.card.dto';
 import { getOwnCardDTO } from './dto/card.Id.dto';
-// import { UpdateBasicInfoCardDto } from './dto/update.base.card.dto';
 import { CardQueryResolversDTO } from './dto/card.pagination';
 import { PaginateResult } from 'mongoose';
 
@@ -31,19 +30,6 @@ export class CardController {
     );
     return new Responser(true, 'Done ', updateCard);
   }
-
-  // @GrpcMethod('CardService', 'UpdateBasicInfoCard')
-  // public async updateBasicInfoCard(
-  //   body: UpdateBasicInfoCardDto,
-  // ): Promise<IResponse<ICard>> {
-  //   const { _id, userId, ...updateData } = body;
-  //   const updateCard: ICard = await this.cardService.update(
-  //     _id,
-  //     userId,
-  //     updateData,
-  //   );
-  //   return new Responser(true, 'Done ', updateCard);
-  // }
 
   @GrpcMethod('CardService', 'GetOwnCard')
   public async getCard(body: getOwnCardDTO): Promise<IResponse<ICard>> {
@@ -79,18 +65,6 @@ export class CardController {
     return new Responser(true, 'Done ', card);
   }
 
-  // @GrpcMethod('CardService', 'GetCardPublic')
-  // public async getCardPublic(
-  //   body: getOwnCardsDTO,
-  // ): Promise<IResponse<ICard[]>> {
-  //   const social: ICard[] = await this.cardService.find({
-  //     userId: body.userId,
-  //   });
-  //   if (!social || social.length <= 0) {
-  //     return new Responser(true, 'no content', [], HttpStatus.NO_CONTENT);
-  //   }
-  //   return new Responser(true, 'Done ', social);
-  // }
   @GrpcMethod('CardService', 'GetOwnCards')
   public async getCards(
     body: Pick<getOwnCardDTO, 'userId'> & CardQueryResolversDTO,
