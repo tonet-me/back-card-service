@@ -15,6 +15,8 @@ import {
   Matches,
   ValidateNested,
 } from 'class-validator';
+import { SensitiveUsername } from 'src/common/decorator/sensitive.username.decorator';
+import { ToLowerCase } from 'src/common/decorator/toLowerCase.decorator';
 import { CardLanguageEnum } from '../enum/card.language.dto';
 import { CardSocialTitleEnum } from '../enum/card.socail.title.dto';
 
@@ -151,6 +153,8 @@ export class AddCardDto {
   @Matches(/^(?=[a-zA-Z0-9_]{5,30}$)(?!.*[.]{2})[^.].*[^.]$/, {
     message: 'username must be _ Alphabets Numbers',
   })
+  @SensitiveUsername('userName')
+  @ToLowerCase('userName')
   readonly userName: string;
 
   @IsOptional()

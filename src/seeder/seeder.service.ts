@@ -1,6 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { StateService } from 'src/state/state.service';
-// import countryData from './countries.data.json';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { ICountry } from 'src/state/interface/country.interface';
@@ -16,14 +15,13 @@ export class SeederService {
       join(__dirname, 'data/countries.data.json'),
       'utf8',
     );
-    const countries = JSON.parse(countryFile.toString());
-    for (const country in countries) {
+    const AllCountries = JSON.parse(countryFile.toString());
+    for (const cityAndCountry of AllCountries.countries) {
       const countryResult: ICountry = await this.stateService.insertCountry({
-        name: country,
+        name: cityAndCountry['country'],
       });
 
-      Logger.log(country, 'country');
-      for (const city of countries[country]) {
+      for (const city of cityAndCountry['states']) {
         this.stateService.insertCities({
           countryId: countryResult._id,
           name: city,

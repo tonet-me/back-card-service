@@ -46,7 +46,7 @@ export class CardController {
     body: Pick<AddCardDto, 'userName'>,
   ): Promise<IResponse<ICard>> {
     const card: ICard = await this.cardService.findOne({
-      userName: body.userName,
+      userName: body.userName.toLowerCase(),
       isActive: true,
     });
     if (!card) throw new NotFoundException('card not found');
