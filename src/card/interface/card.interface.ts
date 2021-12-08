@@ -1,5 +1,6 @@
 import { Document } from 'mongoose';
-import { SocialTitleEnum } from '../enum/socail.title.dto';
+import { CardLanguageEnum } from '../enum/card.language.dto';
+import { CardSocialTitleEnum } from '../enum/card.socail.title.dto';
 
 interface Phone {
   readonly title: string;
@@ -8,7 +9,7 @@ interface Phone {
 }
 
 interface Social {
-  readonly title: SocialTitleEnum;
+  readonly title: CardSocialTitleEnum;
   readonly content: string;
   readonly order: number;
 }
@@ -46,4 +47,5 @@ export interface ICard extends Document {
   readonly addresses: Address[];
   readonly verified: boolean;
   readonly isActive: boolean;
+  readonly language: CardLanguageEnum;
 }

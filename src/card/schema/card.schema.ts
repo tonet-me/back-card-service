@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';
-import { SocialTitleEnum } from '../enum/socail.title.dto';
+import { CardLanguageEnum } from '../enum/card.language.dto';
+import { CardSocialTitleEnum } from '../enum/card.socail.title.dto';
 import { ICard } from '../interface/card.interface';
 
 export const CardSchema = new mongoose.Schema<ICard>(
@@ -33,7 +34,7 @@ export const CardSchema = new mongoose.Schema<ICard>(
     ],
     socials: [
       {
-        title: { type: String, enum: SocialTitleEnum },
+        title: { type: String, enum: CardSocialTitleEnum },
         content: { type: String },
         order: Number,
       },
@@ -60,6 +61,7 @@ export const CardSchema = new mongoose.Schema<ICard>(
       type: Boolean,
       default: false,
     },
+    language: { type: String, enum: CardLanguageEnum, required: true },
   },
   { timestamps: true },
 );
