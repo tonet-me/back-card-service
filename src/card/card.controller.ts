@@ -2,7 +2,7 @@ import { Controller, HttpStatus, NotFoundException } from '@nestjs/common';
 import { CardService } from './card.service';
 import { GrpcMethod } from '@nestjs/microservices';
 import { IResponse } from 'src/common/utils/transform.response';
-import { ICard } from './interface/card.interface';
+import { CardAvalable, ICard } from './interface/card.interface';
 import { Responser } from 'src/common/utils/responser';
 import { UpdateCardDto } from './dto/update.cardl.dto';
 import { AddCardDto } from './dto/add.card.dto';
@@ -87,5 +87,17 @@ export class CardController {
     );
     if (!removeCard) throw new NotFoundException('not found this card item');
     return new Responser(true, 'Done ', removeCard);
+  }
+
+  @GrpcMethod('CardService', 'CheckCardnameAvailable')
+  public async CheckCardnameAvailable(
+    body: Pick<AddCardDto, 'userName'>,
+  ): Promise<IResponse<CardAvalable>> {
+    const findCard: ICard = await this.cardService.findOne({
+      userName: body.userName,
+    });
+    if (!findCard)
+      return new Responser(true, 'Available', { cardAvailable: true });
+    return new Responser(true, 'Not available', { cardAvailable: false });
   }
 }

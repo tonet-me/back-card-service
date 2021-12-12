@@ -2,6 +2,9 @@ import { Document } from 'mongoose';
 import { CardLanguageEnum } from '../enum/card.language.dto';
 import { CardSocialTitleEnum } from '../enum/card.socail.title.dto';
 
+export interface CardAvalable {
+  readonly cardAvailable: boolean;
+}
 interface Phone {
   readonly title: string;
   readonly content: string;
