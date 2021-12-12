@@ -100,4 +100,17 @@ export class CardController {
       return new Responser(true, 'Available', { cardAvailable: true });
     return new Responser(true, 'Not available', { cardAvailable: false });
   }
+
+  @GrpcMethod('CardService', 'DeleteCardPhoto')
+  public async deleteCardPhoto(body: getOwnCardDTO): Promise<IResponse<ICard>> {
+    const deletePhoto: ICard = await this.cardService.update(
+      body._id,
+      body.userId,
+      {
+        photo: '',
+      },
+    );
+    if (!deletePhoto) throw new NotFoundException('card not found');
+    return new Responser(true, '', deletePhoto);
+  }
 }
