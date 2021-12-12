@@ -153,6 +153,12 @@ message GetCardsRequest {
 }
 
 
+message DeleteCardPhotoRequest {
+  string userId = 1;
+  string _id = 2;
+}
+
+
 
 message CardResponse {
   bool success = 1;
@@ -190,4 +196,5 @@ service CardService {
   rpc GetPublicCardByUsername (GetPublicCardByUsername) returns (CardResponse);
   rpc GetPublicCardByQrcode (GetPublicCardByQrcode) returns (CardResponse);
   rpc DeleteOwnCard (GetOwnCard) returns (CardResponse);
+  rpc DeleteCardPhoto (DeleteCardPhotoRequest) returns (CardResponse);
 }
