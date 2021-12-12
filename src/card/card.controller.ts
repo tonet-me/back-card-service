@@ -88,17 +88,4 @@ export class CardController {
     if (!removeCard) throw new NotFoundException('not found this card item');
     return new Responser(true, 'Done ', removeCard);
   }
-
-  @GrpcMethod('CardService', 'DeleteCardPhoto')
-  public async deleteCardPhoto(body: getOwnCardDTO): Promise<IResponse<ICard>> {
-    const updateCard: ICard = await this.cardService.update(
-      body._id,
-      body.userId,
-      {
-        photo: '',
-      },
-    );
-    if (!updateCard) throw new NotFoundException('not found this card item');
-    return new Responser(true, 'Done ', updateCard);
-  }
 }

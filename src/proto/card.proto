@@ -152,14 +152,6 @@ message GetCardsRequest {
   CardFilters filters =3;
 }
 
-
-message DeleteCardPhotoRequest {
-  string userId = 1;
-  string _id = 2;
-}
-
-
-
 message CardResponse {
   bool success = 1;
   string message = 2;
@@ -185,7 +177,6 @@ message CardsResponse {
   string message = 2;
   CardPaginate data = 3;
   int32 status = 4;
-
 }
 
 service CardService {
@@ -196,5 +187,4 @@ service CardService {
   rpc GetPublicCardByUsername (GetPublicCardByUsername) returns (CardResponse);
   rpc GetPublicCardByQrcode (GetPublicCardByQrcode) returns (CardResponse);
   rpc DeleteOwnCard (GetOwnCard) returns (CardResponse);
-  rpc DeleteCardPhoto (DeleteCardPhotoRequest) returns (CardResponse);
 }
