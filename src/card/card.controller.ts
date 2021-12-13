@@ -9,6 +9,7 @@ import { AddCardDto } from './dto/add.card.dto';
 import { getOwnCardDTO } from './dto/card.Id.dto';
 import { CardQueryResolversDTO } from './dto/card.pagination';
 import { PaginateResult } from 'mongoose';
+import { reservedUsernames } from 'src/common/reserved-usernames';
 
 @Controller('card')
 export class CardController {
@@ -93,6 +94,8 @@ export class CardController {
   public async CheckCardnameAvailable(
     body: Pick<AddCardDto, 'userName'>,
   ): Promise<IResponse<CardAvalable>> {
+    if (reservedUsernames.includes(body.userName.toLowerCase()))
+      return new Responser(true, 'Not available', { cardAvailable: false });
     const findCard: ICard = await this.cardService.findOne({
       userName: body.userName,
     });
